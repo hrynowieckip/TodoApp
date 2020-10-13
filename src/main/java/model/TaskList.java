@@ -14,11 +14,18 @@ public class TaskList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String taskListName;
-    @OneToMany(mappedBy = "task_list")
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Task> tasks =  new ArrayList<>();
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDate createdOn;
+
+    public TaskList() {
+    }
+
+    public TaskList(String taskListName) {
+        this.taskListName = taskListName;
+    }
 
     public Long getId() {
         return id;
@@ -34,5 +41,15 @@ public class TaskList {
 
     public LocalDate getCreatedOn() {
         return createdOn;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskList{" +
+                "id=" + id +
+                ", taskListName='" + taskListName + '\'' +
+                ", tasks=" + tasks +
+                ", createdOn=" + createdOn +
+                '}';
     }
 }

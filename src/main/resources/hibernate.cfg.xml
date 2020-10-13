@@ -14,7 +14,8 @@
         <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
         <property name="hbm2ddl.auto">update</property>
 
-<!--        <mapping class=""/>&lt;!&ndash;TODO mapowanie klas &ndash;&gt;-->
+        <mapping class="model.Task"/>
+        <mapping class="model.TaskList"/>
     </session-factory>
 
 </hibernate-configuration>
