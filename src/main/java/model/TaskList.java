@@ -13,6 +13,7 @@ public class TaskList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String taskListName;
     @OneToMany(fetch = FetchType.EAGER)
     private List<Task> tasks =  new ArrayList<>();

@@ -1,20 +1,20 @@
 package service;
 
 import config.DbUtil;
-import model.Task;
 import model.TaskList;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.Collection;
-import java.util.List;
 
 public class TaskListService {
     public void addTaskList(TaskList taskList) {
         try (Session session = DbUtil.getSession()) {
             session.save(taskList);
         }
-    }    public Collection<TaskList> getAllTaskList() {
+    }
+
+    public Collection<TaskList> getAllTaskList() {
         Collection<TaskList> users = null;
         Transaction transaction = null;
         try (Session session = DbUtil.getSession()) {
@@ -27,5 +27,18 @@ public class TaskListService {
 
         }
         return users;
+    }
+
+    public void deleteTaskList(TaskList taskList){
+        Transaction transaction = null;
+        try (Session session = DbUtil.getSession()) {
+            transaction = session.beginTransaction();
+            session.delete(taskList);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+
         }
+    }
 }

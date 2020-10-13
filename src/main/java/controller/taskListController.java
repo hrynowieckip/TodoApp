@@ -43,7 +43,18 @@ public class taskListController {
 
     @FXML
     public void addTaskListButton() {
-        taskListService.addTaskList(new TaskList(nameTaskListField.getText()));
+        if(!nameTaskListField.getText().isEmpty()) {
+            TaskList taskList = new TaskList(nameTaskListField.getText());
+            taskListService.addTaskList(taskList);
+            taskListTable();
+            nameTaskListField.setText("");
+        }
+    }
+    @FXML
+    public void deleteTaskList(){
+        TaskList taskList = taskListTableView.getSelectionModel().getSelectedItem();
+        if(taskList != null)
+        taskListService.deleteTaskList(taskList);
         taskListTable();
     }
 }
