@@ -2,11 +2,19 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.TaskList;
 import service.TaskListService;
+
+import java.io.IOException;
 
 
 public class taskListController {
@@ -56,5 +64,32 @@ public class taskListController {
         if(taskList != null)
         taskListService.deleteTaskList(taskList);
         taskListTable();
+    }
+    @FXML
+    public void selectTaskListButton(){
+
+    }
+
+    public void newWindow(ActionEvent actionEvent) {
+        Parent root;
+        Scene scene;
+        Stage stage = new Stage();
+        try {
+            root = FXMLLoader.load(getClass()
+                    .getResource("/taskWindow.fxml"));
+
+            stage.setTitle("TodoApp");
+            scene = new Scene(root,600,800);
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+            // Hide this current window (if this is what you want)
+            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

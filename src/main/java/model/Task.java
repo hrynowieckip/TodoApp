@@ -20,6 +20,10 @@ public class Task {
     private LocalDate createdOn;
     private Boolean completed;
 
+    public Task(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
