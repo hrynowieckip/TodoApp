@@ -2,8 +2,10 @@ package service;
 
 import config.DbUtil;
 import model.Task;
+import model.TaskList;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import currentList.CurrentList;
 
 import java.util.Collection;
 
@@ -15,18 +17,18 @@ public class TaskService {
     }
 
     public Collection<Task> getAllTasks() {
-        Collection<Task> users = null;
+        Collection<Task> tasks = null;
         Transaction transaction = null;
         try (Session session = DbUtil.getSession()) {
             transaction = session.beginTransaction();
-            users = session.createQuery("Select u from Task u").getResultList();
+            tasks = session.createQuery("select c from Task as c", Task.class).getResultList();
             transaction.commit();
         } catch (RuntimeException e) {
             transaction.rollback();
             e.printStackTrace();
 
         }
-        return users;
+        return tasks;
     }
 
     public void deleteTask(Task task) {

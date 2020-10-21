@@ -6,13 +6,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private TaskList todos;
 
     @CreationTimestamp
@@ -20,6 +19,7 @@ public class Task {
     private LocalDate createdOn;
     private Boolean completed;
 
+    public Task(){}
     public Task(String name) {
         this.name = name;
     }

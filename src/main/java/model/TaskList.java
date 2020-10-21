@@ -15,8 +15,6 @@ public class TaskList {
     private Long id;
     @Column(unique = true)
     private String taskListName;
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Task> tasks =  new ArrayList<>();
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDate createdOn;
@@ -36,9 +34,6 @@ public class TaskList {
         return taskListName;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
-    }
 
     public LocalDate getCreatedOn() {
         return createdOn;
@@ -49,7 +44,6 @@ public class TaskList {
         return "TaskList{" +
                 "id=" + id +
                 ", taskListName='" + taskListName + '\'' +
-                ", tasks=" + tasks +
                 ", createdOn=" + createdOn +
                 '}';
     }

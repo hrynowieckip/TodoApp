@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.TaskList;
 import service.TaskListService;
+import currentList.CurrentList;
 
 import java.io.IOException;
 
@@ -61,13 +62,18 @@ public class taskListController {
     @FXML
     public void deleteTaskList(){
         TaskList taskList = taskListTableView.getSelectionModel().getSelectedItem();
-        if(taskList != null)
-        taskListService.deleteTaskList(taskList);
-        taskListTable();
+        if(taskList != null) {
+            taskListService.deleteTaskList(taskList);
+            taskListTable();
+        }
     }
     @FXML
-    public void selectTaskListButton(){
-
+    public void selectTaskListButton(ActionEvent actionEvent){
+        TaskList taskList = taskListTableView.getSelectionModel().getSelectedItem();
+        if(taskList != null){
+            CurrentList.setId(taskList.getId());
+            newWindow(actionEvent);
+        }
     }
 
     public void newWindow(ActionEvent actionEvent) {

@@ -19,7 +19,7 @@ public class TaskListService {
         Transaction transaction = null;
         try (Session session = DbUtil.getSession()) {
             transaction = session.beginTransaction();
-            users = session.createQuery("Select u from TaskList u").getResultList();
+            users = session.createQuery("Select u from TaskList u", TaskList.class).getResultList();
             transaction.commit();
         } catch (RuntimeException e) {
             transaction.rollback();
@@ -40,5 +40,12 @@ public class TaskListService {
             e.printStackTrace();
 
         }
+    }
+    public TaskList findTaskListById(Long id){
+        TaskList taskList;
+        try(Session session= DbUtil.getSession()){
+            taskList= (TaskList) session.byId(String.valueOf(id));
+        }
+        return taskList;
     }
 }
