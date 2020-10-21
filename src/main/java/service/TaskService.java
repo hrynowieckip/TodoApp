@@ -16,6 +16,18 @@ public class TaskService {
             session.save(task);
         }
     }
+    public void updateTask(Task task){
+        Transaction transaction = null;
+        try (Session session = DbUtil.getSession()) {
+            transaction = session.beginTransaction();
+            session.update(task);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            e.printStackTrace();
+
+        }
+    }
 
     public Collection<Task> getAllTasks() {
         Collection<Task> tasks = null;

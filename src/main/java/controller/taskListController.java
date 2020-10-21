@@ -85,7 +85,7 @@ public class taskListController {
                     .getResource("/taskWindow.fxml"));
 
             stage.setTitle("TodoApp");
-            scene = new Scene(root,600,800);
+            scene = new Scene(root,585,800);
 
             stage.setScene(scene);
             stage.setResizable(false);

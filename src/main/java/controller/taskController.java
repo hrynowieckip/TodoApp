@@ -59,7 +59,7 @@ public class taskController {
     public void addTaskButton() {
         if(!nameTaskField.getText().isEmpty()) {
             TaskList taskListById = taskListService.findTaskListById(CurrentList.getId());
-            Task task = new Task(nameTaskField.getText(), taskListById, CurrentList.getId());
+            Task task = new Task(nameTaskField.getText(), taskListById, CurrentList.getId(), false);
 
             taskService.addTask(task);
             taskTable();
@@ -75,7 +75,12 @@ public class taskController {
     }
     @FXML
     public void selectTaskButton(){
-
+        Task task = tasksTableView.getSelectionModel().getSelectedItem();
+        if(task != null) {
+            task.setCompleted(!task.getCompleted());
+            taskService.updateTask(task);
+        }
+        taskTable();
     }
     @FXML
     public void backTaskButton(ActionEvent actionEvent){
@@ -91,7 +96,7 @@ public class taskController {
                     .getResource("/taskListWindow.fxml"));
 
             stage.setTitle("TodoApp");
-            scene = new Scene(root,600,800);
+            scene = new Scene(root,585,800);
 
             stage.setScene(scene);
             stage.setResizable(false);
