@@ -13,6 +13,8 @@ public class Task {
     private String name;
     @ManyToOne
     private TaskList todos;
+    @Column(name = "todos_id", insertable = false,updatable = false)
+    private Long todosId;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -22,6 +24,11 @@ public class Task {
     public Task(){}
     public Task(String name) {
         this.name = name;
+    }
+    public Task(String name, TaskList task, Long taskId) {
+        this.name = name;
+        this.todos=task;
+        this.todosId=taskId;
     }
 
     public Long getId() {

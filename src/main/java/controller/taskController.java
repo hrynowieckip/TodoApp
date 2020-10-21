@@ -58,7 +58,9 @@ public class taskController {
     @FXML
     public void addTaskButton() {
         if(!nameTaskField.getText().isEmpty()) {
-            Task task = new Task(nameTaskField.getText());
+            TaskList taskListById = taskListService.findTaskListById(CurrentList.getId());
+            Task task = new Task(nameTaskField.getText(), taskListById, CurrentList.getId());
+
             taskService.addTask(task);
             taskTable();
             nameTaskField.setText("");

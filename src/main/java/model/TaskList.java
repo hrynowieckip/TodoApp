@@ -22,6 +22,11 @@ public class TaskList {
     public TaskList() {
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
     public TaskList(String taskListName) {
         this.taskListName = taskListName;
     }

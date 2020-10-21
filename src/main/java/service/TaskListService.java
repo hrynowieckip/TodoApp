@@ -44,7 +44,7 @@ public class TaskListService {
     public TaskList findTaskListById(Long id){
         TaskList taskList;
         try(Session session= DbUtil.getSession()){
-            taskList= (TaskList) session.byId(String.valueOf(id));
+            taskList=session.get(TaskList.class, id);
         }
         return taskList;
     }
