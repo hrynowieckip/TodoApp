@@ -35,6 +35,7 @@ public class taskListController {
 
     @FXML
     public void initialize(){
+        taskListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         taskListTable();
     }
 
@@ -70,6 +71,10 @@ public class taskListController {
     @FXML
     public void selectTaskListButton(ActionEvent actionEvent){
         TaskList taskList = taskListTableView.getSelectionModel().getSelectedItem();
+        enterTaskList(actionEvent, taskList);
+    }
+
+    public void enterTaskList(ActionEvent actionEvent, TaskList taskList) {
         if(taskList != null){
             CurrentList.setId(taskList.getId());
             newWindow(actionEvent);
@@ -90,7 +95,7 @@ public class taskListController {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
-            // Hide this current window (if this is what you want)
+            // Hide this current window
             ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
         }

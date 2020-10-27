@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controller.taskController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" snapToPixel="false" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controller.taskController">
   <children>
     <Text layoutX="251.0" layoutY="37.0" stroke="#606060" strokeType="OUTSIDE" strokeWidth="1.0" text="Tasks:">
       <font>
@@ -28,7 +28,7 @@
         <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="121.0" text="Created on" fx:id="createdOnTaskColumn" />
       </columns>
     </TableView>
-    <Button layoutX="515.0" layoutY="16.0" mnemonicParsing="false" onAction="#selectTaskButton" text="Select" />
+    <Button layoutX="517.0" layoutY="15.0" mnemonicParsing="false" onAction="#selectTaskButton" text="Select" />
     <Button layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#backTaskButton" text="Back" />
   </children>
 </AnchorPane>

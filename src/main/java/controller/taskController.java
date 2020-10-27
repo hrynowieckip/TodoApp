@@ -40,6 +40,7 @@ public class taskController {
 
     @FXML
     public void initialize(){
+        tasksTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         taskTable();
     }
 
@@ -101,7 +102,7 @@ public class taskController {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
-            // Hide this current window (if this is what you want)
+            // Hide this current window
             ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
         }
