@@ -47,13 +47,20 @@ public class taskController {
     public void taskTable() {
         ObservableList<Task> tasksItem = FXCollections.observableArrayList (
                 taskService.getAllTasks());
-
         if (!tasksItem.isEmpty()) {
+            completedTaskColumn.setVisible(true);
+            nameTaskColumn.setVisible(true);
+            createdOnTaskColumn.setVisible(true);
             completedTaskColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
             nameTaskColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             createdOnTaskColumn.setCellValueFactory(new PropertyValueFactory<>("createdOn"));
             tasksTableView.setItems(tasksItem);
-        } else{tasksTableView.setPlaceholder(new Label("No rows to display"));}
+        } else{
+            completedTaskColumn.setVisible(false);
+            nameTaskColumn.setVisible(false);
+            createdOnTaskColumn.setVisible(false);
+            tasksTableView.setPlaceholder(new Label("Brak zadań na tej liście"));
+        }
     }
 
     @FXML
@@ -70,8 +77,10 @@ public class taskController {
     @FXML
     public void deleteTaskButton(){
         Task task = tasksTableView.getSelectionModel().getSelectedItem();
-        if(task != null)
+        if(task != null) {
             taskService.deleteTask(task);
+
+        }
         taskTable();
     }
     @FXML

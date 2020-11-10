@@ -44,11 +44,19 @@ public class taskListController {
                 taskListService.getAllTaskList());
 
         if (!taskListItem.isEmpty()) {
+            idTaskListColumn.setVisible(true);
+            nameTaskListColumn.setVisible(true);
+            createdOnTaskListColumn.setVisible(true);
             idTaskListColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             nameTaskListColumn.setCellValueFactory(new PropertyValueFactory<>("taskListName"));
             createdOnTaskListColumn.setCellValueFactory(new PropertyValueFactory<>("createdOn"));
             taskListTableView.setItems(taskListItem);
-        } else{taskListTableView.setPlaceholder(new Label("No rows to display"));}
+        } else{
+            idTaskListColumn.setVisible(false);
+            nameTaskListColumn.setVisible(false);
+            createdOnTaskListColumn.setVisible(false);
+            taskListTableView.setPlaceholder(new Label("Nie masz jeszcze żadnej listy zadań"));
+        }
     }
 
     @FXML
