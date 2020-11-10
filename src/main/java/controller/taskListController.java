@@ -47,6 +47,15 @@ public class taskListController {
             idTaskListColumn.setVisible(true);
             nameTaskListColumn.setVisible(true);
             createdOnTaskListColumn.setVisible(true);
+
+            idTaskListColumn.prefWidthProperty().bind(taskListTableView.widthProperty().multiply(0.1));
+            nameTaskListColumn.prefWidthProperty().bind(taskListTableView.widthProperty().multiply(0.73));
+            createdOnTaskListColumn.prefWidthProperty().bind(taskListTableView.widthProperty().multiply(0.17));
+
+            idTaskListColumn.setResizable(false);
+            nameTaskListColumn.setResizable(false);
+            createdOnTaskListColumn.setResizable(false);
+
             idTaskListColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             nameTaskListColumn.setCellValueFactory(new PropertyValueFactory<>("taskListName"));
             createdOnTaskListColumn.setCellValueFactory(new PropertyValueFactory<>("createdOn"));

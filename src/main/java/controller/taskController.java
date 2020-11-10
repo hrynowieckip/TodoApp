@@ -51,6 +51,15 @@ public class taskController {
             completedTaskColumn.setVisible(true);
             nameTaskColumn.setVisible(true);
             createdOnTaskColumn.setVisible(true);
+
+            completedTaskColumn.prefWidthProperty().bind(tasksTableView.widthProperty().multiply(0.1));
+            createdOnTaskColumn.prefWidthProperty().bind(tasksTableView.widthProperty().multiply(0.17));
+            nameTaskColumn.prefWidthProperty().bind(tasksTableView.widthProperty().multiply(0.73));
+
+            completedTaskColumn.setResizable(false);
+            createdOnTaskColumn.setResizable(false);
+            nameTaskColumn.setResizable(false);
+
             completedTaskColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
             nameTaskColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             createdOnTaskColumn.setCellValueFactory(new PropertyValueFactory<>("createdOn"));
