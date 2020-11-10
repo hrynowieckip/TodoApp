@@ -40,10 +40,6 @@ public class Task {
         return name;
     }
 
-
-
-
-
     public LocalDate getCreatedOn() {
         return createdOn;
     }

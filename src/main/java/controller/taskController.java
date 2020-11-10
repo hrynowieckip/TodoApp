@@ -24,8 +24,7 @@ import java.io.IOException;
 
 public class taskController {
     TaskService taskService = new TaskService();
-    TaskListService taskListService= new TaskListService();
-    ObservableList<Task> items;
+    TaskListService taskListService = new TaskListService();
 
     @FXML
     private TextField nameTaskField;
@@ -39,14 +38,14 @@ public class taskController {
     private TableColumn createdOnTaskColumn;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         tasksTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         taskTable();
     }
 
     public void taskTable() {
-        ObservableList<Task> tasksItem = FXCollections.observableArrayList (
-                taskService.getAllTasks());
+        ObservableList<Task> tasksItem = FXCollections.observableArrayList(
+                taskService.getAllTasksFromCurrentTaskList());
         if (!tasksItem.isEmpty()) {
             completedTaskColumn.setVisible(true);
             nameTaskColumn.setVisible(true);
@@ -64,17 +63,17 @@ public class taskController {
             nameTaskColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             createdOnTaskColumn.setCellValueFactory(new PropertyValueFactory<>("createdOn"));
             tasksTableView.setItems(tasksItem);
-        } else{
+        } else {
             completedTaskColumn.setVisible(false);
             nameTaskColumn.setVisible(false);
             createdOnTaskColumn.setVisible(false);
-            tasksTableView.setPlaceholder(new Label("Brak zadań na tej liście"));
+            tasksTableView.setPlaceholder(new Label("There are no tasks in this list."));
         }
     }
 
     @FXML
     public void addTaskButton() {
-        if(!nameTaskField.getText().isEmpty()) {
+        if (!nameTaskField.getText().isEmpty()) {
             TaskList taskListById = taskListService.findTaskListById(CurrentList.getId());
             Task task = new Task(nameTaskField.getText(), taskListById, CurrentList.getId(), false);
 
@@ -83,26 +82,28 @@ public class taskController {
             nameTaskField.setText("");
         }
     }
-    @FXML
-    public void deleteTaskButton(){
-        Task task = tasksTableView.getSelectionModel().getSelectedItem();
-        if(task != null) {
-            taskService.deleteTask(task);
 
+    @FXML
+    public void deleteTaskButton() {
+        Task task = tasksTableView.getSelectionModel().getSelectedItem();
+        if (task != null) {
+            taskService.deleteTask(task);
         }
         taskTable();
     }
+
     @FXML
-    public void selectTaskButton(){
+    public void selectTaskButton() {
         Task task = tasksTableView.getSelectionModel().getSelectedItem();
-        if(task != null) {
+        if (task != null) {
             task.setCompleted(!task.getCompleted());
             taskService.updateTask(task);
         }
         taskTable();
     }
+
     @FXML
-    public void backTaskButton(ActionEvent actionEvent){
+    public void backTaskButton(ActionEvent actionEvent) {
         newWindow(actionEvent);
     }
 
@@ -113,18 +114,14 @@ public class taskController {
         try {
             root = FXMLLoader.load(getClass()
                     .getResource("/taskListWindow.fxml"));
-
             stage.setTitle("TodoApp");
-            scene = new Scene(root,585,800);
-
+            scene = new Scene(root, 585, 800);
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
             // Hide this current window
-            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-
-        }
-        catch (IOException e) {
+            ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

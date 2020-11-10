@@ -1,11 +1,11 @@
 package service;
 
 import config.DbUtil;
+import currentList.CurrentList;
 import model.Task;
 import model.TaskList;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import currentList.CurrentList;
 
 import java.util.Collection;
 
@@ -15,7 +15,8 @@ public class TaskService {
             session.save(task);
         }
     }
-    public void updateTask(Task task){
+
+    public void updateTask(Task task) {
         Transaction transaction = null;
         try (Session session = DbUtil.getSession()) {
             transaction = session.beginTransaction();
@@ -28,38 +29,34 @@ public class TaskService {
         }
     }
 
-    public Collection<Task> getAllTasks() {
+    public Collection<Task> getAllTasksFromCurrentTaskList() {
         Collection<Task> tasks = null;
         Transaction transaction = null;
         try (Session session = DbUtil.getSession()) {
             transaction = session.beginTransaction();
-            //TaskList currentTaskList = taskListService.findTaskListById(CurrentList.getId());
-//            tasks = session.createQuery("SELECT q FROM Task q", Task.class).getResultList();
-            tasks = session.createQuery("SELECT q FROM Task q WHERE q.todosId ="+ CurrentList.getId(), Task.class).getResultList();
+            tasks = session.createQuery("SELECT q FROM Task q WHERE q.todosId =" + CurrentList.getId(), Task.class).getResultList();
             transaction.commit();
         } catch (RuntimeException e) {
             transaction.rollback();
             e.printStackTrace();
-
         }
         return tasks;
     }
+
     public Collection<Task> getAllTasksForTaskList(TaskList taskList) {
         Collection<Task> tasks = null;
         Transaction transaction = null;
         try (Session session = DbUtil.getSession()) {
             transaction = session.beginTransaction();
-            //TaskList currentTaskList = taskListService.findTaskListById(CurrentList.getId());
-//            tasks = session.createQuery("SELECT q FROM Task q", Task.class).getResultList();
-            tasks = session.createQuery("SELECT q FROM Task q WHERE q.todosId ="+ taskList.getId(), Task.class).getResultList();
+            tasks = session.createQuery("SELECT q FROM Task q WHERE q.todosId =" + taskList.getId(), Task.class).getResultList();
             transaction.commit();
         } catch (RuntimeException e) {
             transaction.rollback();
             e.printStackTrace();
-
         }
         return tasks;
     }
+
     public void deleteTask(Task task) {
         Transaction transaction = null;
         try (Session session = DbUtil.getSession()) {
@@ -69,7 +66,6 @@ public class TaskService {
         } catch (RuntimeException e) {
             transaction.rollback();
             e.printStackTrace();
-
         }
     }
 }

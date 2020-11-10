@@ -1,5 +1,6 @@
 package controller;
 
+import currentList.CurrentList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,19 +9,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.TaskList;
 import service.TaskListService;
-import currentList.CurrentList;
 
 import java.io.IOException;
 
 
 public class taskListController {
     TaskListService taskListService = new TaskListService();
-    ObservableList<TaskList> items;
 
     @FXML
     private TextField nameTaskListField;
@@ -34,13 +36,13 @@ public class taskListController {
     private TableColumn createdOnTaskListColumn;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         taskListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         taskListTable();
     }
 
     public void taskListTable() {
-        ObservableList<TaskList> taskListItem = FXCollections.observableArrayList (
+        ObservableList<TaskList> taskListItem = FXCollections.observableArrayList(
                 taskListService.getAllTaskList());
 
         if (!taskListItem.isEmpty()) {
@@ -60,39 +62,41 @@ public class taskListController {
             nameTaskListColumn.setCellValueFactory(new PropertyValueFactory<>("taskListName"));
             createdOnTaskListColumn.setCellValueFactory(new PropertyValueFactory<>("createdOn"));
             taskListTableView.setItems(taskListItem);
-        } else{
+        } else {
             idTaskListColumn.setVisible(false);
             nameTaskListColumn.setVisible(false);
             createdOnTaskListColumn.setVisible(false);
-            taskListTableView.setPlaceholder(new Label("Nie masz jeszcze żadnej listy zadań"));
+            taskListTableView.setPlaceholder(new Label("You don't have any to-do list yet."));
         }
     }
 
     @FXML
     public void addTaskListButton() {
-        if(!nameTaskListField.getText().isEmpty()) {
+        if (!nameTaskListField.getText().isEmpty()) {
             TaskList taskList = new TaskList(nameTaskListField.getText());
             taskListService.addTaskList(taskList);
             taskListTable();
             nameTaskListField.setText("");
         }
     }
+
     @FXML
-    public void deleteTaskList(){
+    public void deleteTaskList() {
         TaskList taskList = taskListTableView.getSelectionModel().getSelectedItem();
-        if(taskList != null) {
+        if (taskList != null) {
             taskListService.deleteTaskList(taskList);
             taskListTable();
         }
     }
+
     @FXML
-    public void selectTaskListButton(ActionEvent actionEvent){
+    public void selectTaskListButton(ActionEvent actionEvent) {
         TaskList taskList = taskListTableView.getSelectionModel().getSelectedItem();
         enterTaskList(actionEvent, taskList);
     }
 
     public void enterTaskList(ActionEvent actionEvent, TaskList taskList) {
-        if(taskList != null){
+        if (taskList != null) {
             CurrentList.setId(taskList.getId());
             newWindow(actionEvent);
         }
@@ -105,18 +109,14 @@ public class taskListController {
         try {
             root = FXMLLoader.load(getClass()
                     .getResource("/taskWindow.fxml"));
-
             stage.setTitle("TodoApp");
-            scene = new Scene(root,585,800);
-
+            scene = new Scene(root, 585, 800);
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
             // Hide this current window
-            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-
-        }
-        catch (IOException e) {
+            ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

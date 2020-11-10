@@ -4,8 +4,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "task_list")
@@ -38,7 +36,6 @@ public class TaskList {
     public String getTaskListName() {
         return taskListName;
     }
-
 
     public LocalDate getCreatedOn() {
         return createdOn;
