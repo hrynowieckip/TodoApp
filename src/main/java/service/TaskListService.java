@@ -1,6 +1,7 @@
 package service;
 
 import config.DbUtil;
+import model.Task;
 import model.TaskList;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -8,6 +9,7 @@ import org.hibernate.Transaction;
 import java.util.Collection;
 
 public class TaskListService {
+    private TaskService taskService = new TaskService();
     public void addTaskList(TaskList taskList) {
         try (Session session = DbUtil.getSession()) {
             session.save(taskList);
@@ -30,6 +32,18 @@ public class TaskListService {
     }
 
     public void deleteTaskList(TaskList taskList){
+        Collection<Task> allTasksForTaskList = taskService.getAllTasksForTaskList(taskList);
+        if(allTasksForTaskList.isEmpty()){
+            deleteEmptyTaskList(taskList);
+        } else {
+            for(Task e: allTasksForTaskList){
+                taskService.deleteTask(e);
+            }
+            deleteEmptyTaskList(taskList);
+        }
+    }
+
+    public void deleteEmptyTaskList(TaskList taskList){
         Transaction transaction = null;
         try (Session session = DbUtil.getSession()) {
             transaction = session.beginTransaction();
